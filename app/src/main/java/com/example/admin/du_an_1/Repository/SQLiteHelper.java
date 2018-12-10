@@ -54,7 +54,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public String CREATE_TABLE_PRODUCT= "CREATE TABLE " + TABLE_PRODUCT_NAME+" ( "+
             PRODUCT_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, "+
             PRODUCT_CODE+ " TEXT, "+
-            PRODUCT_CATEGORY+ "TEXT, " +
+            PRODUCT_CATEGORY+ " TEXT, "+
             PRODUCT_NAME+ " TEXT )";
     /////////////////////////////////////
     // TABLE CATEGORY

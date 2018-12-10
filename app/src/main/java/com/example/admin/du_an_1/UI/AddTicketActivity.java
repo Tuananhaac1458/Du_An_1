@@ -168,7 +168,7 @@ public class AddTicketActivity extends AppCompatActivity implements View.OnClick
         myProduct = new Product();
         myProduct.setCode(etProductcode.getText().toString());
         myProduct.setName(etProductname.getText().toString());
-        myProduct.setCategory(null);
+        myProduct.setCategory(spnCategory.getSelectedItem().toString());
         myProduct.setId(null);
         return myProduct;
     }
@@ -176,7 +176,7 @@ public class AddTicketActivity extends AppCompatActivity implements View.OnClick
     public Ticket addTicket(){
         myTicket = new Ticket();
         myTicket.setDate(etDate.getText().toString());
-        myTicket.setType(null);
+        myTicket.setType(true);
         myTicket.setId(null);
         myTicket.setproductName(etProductname.getText().toString());
         myTicket.setQuantity(Integer.parseInt(etQuantity.getText().toString()));

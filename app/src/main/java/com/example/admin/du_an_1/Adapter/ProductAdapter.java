@@ -12,13 +12,19 @@ import com.example.admin.du_an_1.DAO.daoProducts;
 import com.example.admin.du_an_1.R;
 import com.example.admin.du_an_1.Repository.Product;
 
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class ProductAdapter extends BaseAdapter {
     List<Product> arrProduct;
     Context context;
     LayoutInflater inflater;
     daoProducts daoProducts;
+    private List<Product> arrProductPhu;
+
 
     public ProductAdapter(Context context, List<Product> arrProduct){
         super();
@@ -26,6 +32,36 @@ public class ProductAdapter extends BaseAdapter {
         this.arrProduct = arrProduct;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         daoProducts = new daoProducts(context);
+
+        this.arrProductPhu = new ArrayList<Product>();
+        this.arrProductPhu.addAll(arrProduct);
+    }
+
+    // tim kiem
+// thay doi list
+    public void filter(String charText){
+        charText = charText.toLowerCase(Locale.getDefault());
+        arrProduct.clear();
+        if (charText.length() == 0)
+        {
+            arrProduct.addAll(arrProductPhu);
+        }
+        else {
+            for (Product  Name : arrProductPhu){
+                String biendoi = remoAccent(Name.getName().toLowerCase(Locale.getDefault()));
+                if (biendoi.contains(charText)){
+                    arrProduct.add(Name);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    // chuyen chu co dau thanh khong dau
+    public static String remoAccent(String s){
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(temp).replaceAll("");
     }
     @Override
     public int getCount() {

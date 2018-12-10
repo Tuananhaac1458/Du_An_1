@@ -9,6 +9,7 @@ import com.example.admin.du_an_1.Repository.SQLiteHelper;
 import com.example.admin.du_an_1.Repository.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class daoProducts {
     private SQLiteDatabase db;
@@ -30,6 +31,7 @@ public class daoProducts {
             temp.setId(c.getString(c.getColumnIndex(SQLiteHelper.PRODUCT_ID)));
             temp.setName(c.getString(c.getColumnIndex(SQLiteHelper.PRODUCT_NAME)));
             temp.setCode(c.getString(c.getColumnIndex(SQLiteHelper.PRODUCT_CODE)));
+            temp.setCategory(c.getString(c.getColumnIndex(SQLiteHelper.PRODUCT_CATEGORY)));
             result.add(temp);
         }
         return result;
@@ -45,12 +47,19 @@ public class daoProducts {
         ArrayList<Product> list = getDataModels(sql, Id);
         return list.get(0);
     }
+    // get by name
+    public List<Product> getByName(String Name) {
+        String sql = "SELECT * FROM " + SQLiteHelper.TABLE_PRODUCT_NAME + " WHERE Name=? ";
+        ArrayList<Product> list = getDataModels(sql, Name);
+        return list;
+    }
     // Add
     public long insertProduct(Product datamodel) {
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.PRODUCT_ID, datamodel.getId());
         values.put(SQLiteHelper.PRODUCT_NAME, datamodel.getName());
         values.put(SQLiteHelper.PRODUCT_CODE, datamodel.getCode());
+        values.put(SQLiteHelper.PRODUCT_CATEGORY, datamodel.getCategory());
         return db.insert(SQLiteHelper.TABLE_PRODUCT_NAME, null, values);
     }
     //Update
@@ -59,6 +68,7 @@ public class daoProducts {
         values.put(SQLiteHelper.PRODUCT_ID, datamodel.getId());
         values.put(SQLiteHelper.PRODUCT_NAME, datamodel.getName());
         values.put(SQLiteHelper.PRODUCT_CODE, datamodel.getCode());
+        values.put(SQLiteHelper.PRODUCT_CATEGORY, datamodel.getCategory());
         return db.update(SQLiteHelper.TABLE_PRODUCT_NAME, values, "id=?", new String[]{String.valueOf(datamodel.getId())});
     }
     //Delete by Id
